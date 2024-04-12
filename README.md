@@ -1,6 +1,6 @@
 # Emlx
 
-**TODO: Add description**
+Bindings for [Apple MLX](https://ml-explore.github.io/mlx-c/build/html/index.html).
 
 ## Installation
 
