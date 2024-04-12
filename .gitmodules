@@ -1,0 +1,3 @@
+[submodule "3rd_party/mlx-c"]
+	path = 3rd_party/mlx-c
+	url = git@github.com:ml-explore/mlx-c.git
