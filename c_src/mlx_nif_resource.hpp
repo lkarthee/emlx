@@ -10,6 +10,8 @@
 // Only for debugging:
 #include <cstdio>
 
+#include "mlx/c/mlx.h"
+
 template <typename...> using void_t = void;
 
 // Check for the existence of member variable 'release' using SFINAE
@@ -96,4 +98,22 @@ template <typename T> struct NifRes {
   }
 };
 
+
+static void destruct_mlx_array_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_array> *)args;
+  mlx_free(&res->val);
+}
+
+static void destruct_mlx_device_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_device> *)args;
+  mlx_free(&res->val);
+}
+
+static void destruct_mlx_stream_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_stream> *)args;
+  mlx_free(&res->val);
+}
+
+
 #endif /* MLX_NIF_RESOURCE_HPP */
+

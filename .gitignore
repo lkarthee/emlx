@@ -33,3 +33,6 @@ priv/include/
 priv/lib/
 priv/share/
 priv/*.so
+
+# venv
+.venv/
