@@ -393,13 +393,38 @@ static ERL_NIF_TERM array_get_dtype(ErlNifEnv* env, int argc, const ERL_NIF_TERM
   } 
 }
 
-// random
 
+// operations
+
+static ERL_NIF_TERM abs(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+  using res_type = NifRes<mlx_array>;
+  using stream_res_type = NifRes<mlx_stream>;
+
+  ERL_NIF_TERM error{};
+  res_type * array = nullptr;
+  if ((array = res_type::get_resource(env, argv[0], error)) == nullptr) {
+    return error;
+  }
+
+  stream_res_type * stream_res = nullptr;
+  mlx_stream stream = nullptr;
+  if ((stream_res = stream_res_type::get_resource(env, argv[1], error)) == nullptr) {
+    stream = mlx_default_stream(mlx_default_device());
+  } 
+  auto op_array = res_type::allocate_resource(env, error);
+  op_array->val = mlx_abs(array->val, stream);
+  ERL_NIF_TERM ret = op_array->make_resource(env);
+  return erlang::nif::ok(env, ret);
+}
+
+// random
 
 static ERL_NIF_TERM random_bernouli(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
   return erlang::nif::atom(env, "nil");
 }
+
 // random_bernouli(_array, _shape, _num_shape, _key, _stream)
 
 // random_bits(_shape, _num_shape, _width, _key, _stream)
@@ -688,6 +713,18 @@ static ErlNifFunc nif_funcs[] =
   {"array_nbytes", 1, array_nbytes},
   {"array_ndim", 1, array_ndim},
   {"array_get_dtype", 1, array_get_dtype},
+
+  // operations
+  {"abs", 2, abs},
+  // {"add", 3, add},
+  // {"addmm", 6, abs},
+  // {"all_axes", 5, abs},
+  // {"all_axis", 4, abs},
+  // {"all_all", 3, abs},
+  // {"allclose", 6, abs},
+  // {"any", 5, abs},
+  // {"any_all", 3, abs},
+
 
   // random
   // {"random_bernouli", 5, random_bernouli},
