@@ -259,6 +259,19 @@ static ERL_NIF_TERM array_from_complex(ErlNifEnv* env, int argc, const ERL_NIF_T
 //   return erlang::nif::ok(env, ret);
 // }
 
+static ERL_NIF_TERM array_item_bool(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+  using res_type = NifRes<mlx_array>;
+
+  ERL_NIF_TERM error{};
+  res_type * array = nullptr;
+  if ((array = res_type::get_resource(env, argv[0], error)) == nullptr) {
+    return error;
+  }
+  auto item = mlx_array_item_bool(array->val);
+  return erlang::nif::make(env, item);
+}
+
 static ERL_NIF_TERM array_itemsize(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
   using res_type = NifRes<mlx_array>;
@@ -325,6 +338,59 @@ static ERL_NIF_TERM array_size(ErlNifEnv* env, int argc, const  ERL_NIF_TERM arg
   }
   auto size = static_cast<uint64_t>(mlx_array_size(array->val));
   return erlang::nif::make(env, size);
+}
+
+static ERL_NIF_TERM array_get_dtype(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+  using res_type = NifRes<mlx_array>;
+
+  ERL_NIF_TERM error{};
+  res_type * array = nullptr;
+  if ((array = res_type::get_resource(env, argv[0], error)) == nullptr) {
+    return error;
+  }
+  auto dtype = mlx_array_get_dtype(array->val);
+  switch(dtype)
+  {
+    case MLX_BOOL:
+      return erlang::nif::atom(env, "bool");
+
+    case MLX_UINT8:
+      return erlang::nif::atom(env, "uint8");
+
+    case MLX_UINT16:
+      return erlang::nif::atom(env, "uint16");
+
+    case MLX_UINT32:
+      return erlang::nif::atom(env, "uint32");
+
+    case MLX_UINT64:
+      return erlang::nif::atom(env, "uint64");
+
+    case MLX_INT8:
+      return erlang::nif::atom(env, "int8");
+
+    case MLX_INT16:
+      return erlang::nif::atom(env, "int16");
+
+    case MLX_INT32:
+      return erlang::nif::atom(env, "int32");
+
+    case MLX_INT64:
+      return erlang::nif::atom(env, "int64");
+
+    case MLX_FLOAT16:
+      return erlang::nif::atom(env, "float16");
+
+    case MLX_FLOAT32:
+      return erlang::nif::atom(env, "float32");
+
+    case MLX_BFLOAT16:
+      return erlang::nif::atom(env, "bfloat16");
+
+    case MLX_COMPLEX64:
+      return erlang::nif::atom(env, "complex64");
+  } 
 }
 
 // random
@@ -614,11 +680,14 @@ static ErlNifFunc nif_funcs[] =
   // {"array_from_float32", 1, array_from_float32},
   // {"array_from_complex64", 1, array_from_complex64},
 
+  {"array_item_bool", 1, array_item_bool},
+
   {"array_itemsize", 1, array_itemsize},
   {"array_shape", 1, array_shape},
   {"array_size", 1, array_size},
   {"array_nbytes", 1, array_nbytes},
   {"array_ndim", 1, array_ndim},
+  {"array_get_dtype", 1, array_get_dtype},
 
   // random
   // {"random_bernouli", 5, random_bernouli},

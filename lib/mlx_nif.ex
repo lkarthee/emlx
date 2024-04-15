@@ -47,7 +47,7 @@ defmodule Mlx.Nif do
 
   def array_dim(_array, _dim), do: :erlang.nif_error(:not_loaded)
 
-  def array_get_dtype(_array, _dim), do: :erlang.nif_error(:not_loaded)
+  def array_get_dtype(_array), do: :erlang.nif_error(:not_loaded)
 
   def array_eval(_array), do: :erlang.nif_error(:not_loaded)
 
