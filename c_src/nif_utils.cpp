@@ -85,6 +85,22 @@ int get(ErlNifEnv *env, ERL_NIF_TERM term, bool *var) {
 
 // Numeric types
 
+// int get(ErlNifEnv *env, ERL_NIF_TERM term, uint8_t *var) {
+//     return enif_get_int(env, term, var);
+// }
+
+// int get(ErlNifEnv *env, ERL_NIF_TERM term, uint16_t *var) {
+//     return enif_get_int(env, term, var);
+// }
+
+// int get(ErlNifEnv *env, ERL_NIF_TERM term, uint32_t *var) {
+//     return enif_get_int(env, term, var);
+// }
+
+// int get(ErlNifEnv *env, ERL_NIF_TERM term, uint64_t *var) {
+//     return enif_get_int(env, term, var);
+// }
+
 int get(ErlNifEnv *env, ERL_NIF_TERM term, int *var) {
     return enif_get_int(env, term, var);
 }

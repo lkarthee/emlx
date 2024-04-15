@@ -104,6 +104,16 @@ static void destruct_mlx_array_resource(ErlNifEnv *env, void *args) {
   mlx_free(&res->val);
 }
 
+static void destruct_mlx_vector_array_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_vector_array> *)args;
+  mlx_free(&res->val);
+}
+
+static void destruct_mlx_vector_vector_array_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_vector_vector_array> *)args;
+  mlx_free(&res->val);
+}
+
 static void destruct_mlx_device_resource(ErlNifEnv *env, void *args) {
   auto res = (NifRes<mlx_device> *)args;
   mlx_free(&res->val);
@@ -111,6 +121,16 @@ static void destruct_mlx_device_resource(ErlNifEnv *env, void *args) {
 
 static void destruct_mlx_stream_resource(ErlNifEnv *env, void *args) {
   auto res = (NifRes<mlx_stream> *)args;
+  mlx_free(&res->val);
+}
+
+static void destruct_mlx_closure_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_closure> *)args;
+  mlx_free(&res->val);
+}
+
+static void destruct_mlx_safetensors_resource(ErlNifEnv *env, void *args) {
+  auto res = (NifRes<mlx_safetensors> *)args;
   mlx_free(&res->val);
 }
 

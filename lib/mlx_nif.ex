@@ -13,13 +13,15 @@ defmodule Mlx.Nif do
   def hello, do: :erlang.nif_error(:not_loaded)
 
   # object
-  def tostring(_obj), do: :erlang.nif_error(:not_loaded)
+  # def tostring(_obj), do: :erlang.nif_error(:not_loaded)
 
-  def retain(_obj), do: :erlang.nif_error(:not_loaded)
+  # def retain(_obj), do: :erlang.nif_error(:not_loaded)
 
-  def free(_obj), do: :erlang.nif_error(:not_loaded)
+  # def free(_obj), do: :erlang.nif_error(:not_loaded)
 
   # array
+
+  def array_tostring(_array), do: :erlang.nif_error(:not_loaded)
 
   def array_from_bool(_val), do: :erlang.nif_error(:not_loaded)
 
@@ -27,7 +29,7 @@ defmodule Mlx.Nif do
 
   def array_from_float(_val), do: :erlang.nif_error(:not_loaded)
 
-  def array_from_complex(_val), do: :erlang.nif_error(:not_loaded)
+  def array_from_complex(_real_val, _imag_val), do: :erlang.nif_error(:not_loaded)
 
   def array_from_data(_data, _shape, _dim, _dtype), do: :erlang.nif_error(:not_loaded)
 
@@ -108,7 +110,6 @@ defmodule Mlx.Nif do
   def vector_array_get(_vec, _index), do: :erlang.nif_error(:not_loaded)
   
   def vector_array_size(_vec), do: :erlang.nif_error(:not_loaded)
-
 
   # vec of vec of arrays
 
